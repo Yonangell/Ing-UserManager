@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://kit.fontawesome.com/e78ed52000.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/x" href="../assets/image/usuario.png" />
+  </head>
+  <body class="bg-slate-200">
+    <nav
+      class="bg-indigo-700 text-white p-4 flex justify-between items-center shadow-lg"
+    >
+      <span class="font-bold">Panel de Usuario</span>
+      <div class="flex gap-4">
+        <a
+          href="./admin.html"
+          id="nav-admin"
+          class="hidden hover:underline"
+          target="_blank"
+          >Panel Administrativo</a
+        >
+        <button
+          id="btn-logout"
+          class="bg-red-500 px-4 py-1 rounded-2xl text-lg font-bold cursor-pointer"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
+    </nav>
+    <main class="max-w-xl mx-auto mt-10 p-8 bg-white rounded-2xl shadow-xl">
+      <h2 class="text-3xl font-bold mb-6 text-center text-neutral-700">
+        Administrar Perfil
+      </h2>
+      <form action="#" id="profile-form" class="space-y-4">
+        <input
+          type="text"
+          id="p-nombre"
+          placeholder="Nombre"
+          required
+          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+        <input
+          type="text"
+          id="p-apellido"
+          placeholder="Apellido"
+          required
+          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+        <input
+          type="email"
+          id="p-correo"
+          placeholder="Email"
+          required
+          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+        <button
+          class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer"
+        >
+          Actualizar Información
+        </button>
+      </form>
+    </main>
+    <script type="module" src="../js/autorizacion.js"></script>
+    <script type="module" src="../js/forms.js"></script>
+  </body>
+</html>

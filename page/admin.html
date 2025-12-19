@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Administrativo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://kit.fontawesome.com/e78ed52000.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/x" href="../assets/image/blogger.png" />
+  </head>
+  <body class="bg-slate-200 text-neutral-700">
+    <nav
+      class="bg-indigo-700 text-white p-4 flex justify-between items-center shadow-lg"
+    >
+      <span class="font-bold">ADMINISTRADOR</span>
+      <div class="flex gap-4">
+        <a href="./perfil.html" class="text-lg hover:underline" target="_blank"
+          >Mi Perfil</a
+        >
+        <button
+          id="btn-logout"
+          class="bg-red-500 px-4 py-1 rounded-2xl text-lg font-bold cursor-pointer"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
+    </nav>
+    <main class="p-8">
+      <div class="bg-white rounded-2xl shadow-md p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-neutral-700">
+            Gestión de Usuarios (CRUD)
+          </h2>
+          <button
+            id="admin-add-user"
+            class="bg-green-500 px-4 py-2 rounded-2xl text-lg font-bold cursor-pointer"
+          >
+            + Crear Usuario
+          </button>
+        </div>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-300 borde-ber-b">
+              <th class="p-3">Nombre</th>
+              <th class="p-3">Email</th>
+              <th class="p-3">Rol</th>
+              <th class="p-3 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="user-list-table"></tbody>
+        </table>
+      </div>
+    </main>
+    <script type="module" src="../js/autorizacion.js"></script>
+    <script type="module" src="../js/forms.js"></script>
+  </body>
+</html>

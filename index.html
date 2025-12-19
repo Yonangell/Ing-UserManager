@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración de Usuarios</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administración de Usuarios 2025</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://kit.fontawesome.com/e78ed52000.js" crossorigin="anonymous"></script>
-
-</head>
-<body>
-    
-</body>
+    <script
+      src="https://kit.fontawesome.com/e78ed52000.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="icon"
+      type="image/x"
+      href="assets/image/gestion-de-equipos.png"
+    />
+  </head>
+  <body class="bg-gray-200 flex items-center justify-center min-h-screen">
+    <div
+      class="bg-white p-12 rounded-2xl shadow-xl w-full max-w-md border border-slate-400"
+    >
+      <h2 class="text-center text-3xl font-bold mb-6 text-neutral-700">
+        Iniciar Sesión
+      </h2>
+      <form id="login-form" class="space-y-5">
+        <input
+          type="email"
+          id="correo"
+          placeholder="Email"
+          required
+          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+        <input
+          type="password"
+          id="passw"
+          placeholder="Contraseña"
+          required
+          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer"
+        >
+          Entrar
+        </button>
+      </form>
+      <p class="text-center text-shadow-lg mt-2 mb-6">
+        ¿No tienes cuenta?
+        <a
+          href="./page/registro.html"
+          class="text-indigo-600 hover:underline font-bold"
+          target="_blank"
+          >Regístrate aquí</a
+        >
+      </p>
+    </div>
+    <script type="module" src="./js/autorizacion.js"></script>
+    <script type="module" src="./js/forms.js"></script>
+  </body>
 </html>
