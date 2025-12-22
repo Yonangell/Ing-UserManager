@@ -1,53 +1,78 @@
+/**
+ * @file Módulo de gestión de usuarios y autenticación.
+ * Maneja el flujo de login, registro, perfil y administración CRUD.
+ */
+
 import { db } from "./database.js";
 
+/** @type {Object|null} Sesión del usuario actual almacenada en el navegador. */
 const session = JSON.parse(localStorage.getItem("current_session"));
 
-// Manejo del formulario de login
+/**
+ * Procesa el inicio de sesión del usuario.
+ * Valida credenciales contra la base de datos y gestiona la redirección por roles.
+ */
 document.getElementById("login-form")?.addEventListener("submit", (e) => {
-  e.preventDefaul();
+  e.preventDefault();
 
   const email = document.getElementById("correo").value;
   const pass = document.getElementById("passw").value;
-  const user = db
-    .getUsers()
-    .find((u) => u.email === email && db.decrypt(u.pss) === pass);
+  const user = db.getUsers().find((u) => {
+    if (u.email !== email) return false;
+    try {
+      return db.decrypt(u.passw) === pass;
+    } catch {
+      return u.passw === pass; // Fallback si no está encriptada
+    }
+  });
 
   if (user) {
     localStorage.setItem("current_session", JSON.stringify(user));
     window.location.href =
-      user.rol === "administrador" ? "admin.html" : "perfil.html";
+      user.rol === "administrador" ? "page/admin.html" : "page/perfil.html";
   } else {
     alert("Credenciales Invalidas");
+    document.getElementById("login-form").reset();
   }
 });
 
-// Manejo del formulario registro
+/**
+ * Registra un nuevo usuario en el sistema.
+ * Verifica duplicidad de correo y asigna rol de "usuario" por defecto.
+ */
 document.getElementById("register-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const email = document.getElementById("correo").value;
   if (db.getUsers().some((u) => u.email === email))
     return alert("El correo ya extiste");
+  
 
   const newUser = {
-    id: Date.now.toString(),
+    id: Date.now().toString(),
     nombre: document.getElementById("nombre").value,
     apellido: document.getElementById("apellido").value,
     email: email,
-    pass: db.encrypt(document.getElementById("passw").value),
+    passw: db.encrypt(document.getElementById("passw").value),
     rol: "usuario",
   };
   db.saveUsers([...db.getUsers(), newUser]);
   alert("Su registro ha sido exitoso");
-  window.location.href = "index.html";
+  window.location.href = "/index.html";
 });
 
-// Manejo del formulario del perfil
+/**
+ * Inicializa y gestiona la actualización de datos del perfil de usuario.
+ */
 if (document.getElementById("profile-form")) {
   document.getElementById("p-nombre").value = session.nombre;
   document.getElementById("p-apellido").value = session.apellido;
   document.getElementById("p-correo").value = session.email;
 
+  /**
+   * Event listener para el formulario de perfil.
+   * Actualiza la información del usuario en la base de datos y localStorage.
+   */
   document.getElementById("profile-form").onsubmit = (e) => {
     e.preventDefault();
     const users = db.getUsers();
@@ -67,22 +92,25 @@ if (document.getElementById("profile-form")) {
 
 const table = document.getElementById("user-list-table");
 if (table) {
+  /**
+   * Genera el HTML de la tabla de usuarios y lo inserta en el DOM.
+   */
   const renderTable = () => {
     const users = db.getUsers();
     table.innerHTML = users
       .map(
         (u) => `
                 <tr class ="border-b">
-                <td class="p-3">${nombre} ${u.apellido}</td>
+                <td class="p-3">${u.nombre} ${u.apellido}</td>
                 <td class="p-3">${u.email}</td>
                 <td class="p-3 font-bold text-xs">${u.rol.toUpperCase()}</td>
                 <td class="p-3 text-center">
                 <button onclick="window.edit('${
                   u.id
-                }')" class="text-blue-600 mr-2">Editar</button>
+                }')" class="text-blue-600 mr-2 cursor-pointer">Editar</button>
                     <button onclick="window.del('${
                       u.id
-                    }')" class="text-red-600">Eliminar</button>
+                    }')" class="text-red-600 cursor-pointer">Eliminar</button>
                     </td>
                     </tr>
                 
@@ -91,6 +119,10 @@ if (table) {
       .join("");
   };
 
+  /**
+   * Elimina un usuario del sistema por su ID.
+   * @param {string} id - Identificador único del usuario.
+   */
   window.del = (id) => {
     if (id === session.id) return alert("No Puedes eliminarte a ti mismo");
     if (confirm("¿Eliminar Usuario?")) {
@@ -99,6 +131,10 @@ if (table) {
     }
   };
 
+  /**
+   * Permite editar el nombre de un usuario mediante un prompt.
+   * @param {string} id - Identificador único del usuario.
+   */
   window.edit = (id) => {
     const users = db.getUsers();
     const index = users.findIndex((u) => u.id === id);
@@ -110,6 +146,10 @@ if (table) {
     }
   };
 
+  /**
+   * Event listener para el botón de agregar usuario en el panel administrativo.
+   * Crea un nuevo usuario con email proporcionado y contraseña por defecto.
+   */
   document.getElementById("admin-add-user").onclick = () => {
     const email = prompt("Email del nuevo usuario:");
     if (email && !db.getUsers().some((u) => u.email === email)) {
@@ -118,9 +158,11 @@ if (table) {
         nombre: "Nuevo",
         apellido: "Usuario",
         email,
-        pass: db.encrypt("123456"),
-        roles: "usuario",
+        passw: db.encrypt("123456"),
+        rol: "usuario",
       };
+      db.saveUsers([...db.getUsers(), newUser]);
+      renderTable();
     }
   };
 

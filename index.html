@@ -9,51 +9,81 @@
       src="https://kit.fontawesome.com/e78ed52000.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="./css/styles.css" />
     <link
       rel="icon"
       type="image/x"
       href="assets/image/gestion-de-equipos.png"
     />
   </head>
-  <body class="bg-gray-200 flex items-center justify-center min-h-screen">
+  <body
+    class="bg-gray-200 flex flex-col items-center justify-center min-h-screen p-4"
+  >
+    <div class="text-center mb-2">
+      <div
+        class="bg-indigo-600 w-16 h-16 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-2"
+      >
+        <i class="fa-solid fa-shield-halved text-white text-3xl"></i>
+      </div>
+      <h1
+        class="sm:text-2xl md:text-4xl font-black text-slate-800 tracking-tight"
+      >
+        Sistem<span class="text-indigo-600">Admin</span>
+      </h1>
+      <p class="text-neutral-700 font-medium mt-1 sm:text-lg md:text-2xl">
+        Gestión Centralizada de Usuarios
+      </p>
+    </div>
     <div
-      class="bg-white p-12 rounded-2xl shadow-xl w-full max-w-md border border-slate-400"
+      class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl w-full max-w-md border border-slate-400"
     >
-      <h2 class="text-center text-3xl font-bold mb-6 text-neutral-700">
-        Iniciar Sesión
+      <h2
+        class="text-center sm:text-lg md:text-2xl font-semibold mb-8 text-neutral-700"
+      >
+        Bienvenidos a la Plataforma de Administración
       </h2>
-      <form id="login-form" class="space-y-5">
-        <input
-          type="email"
-          id="correo"
-          placeholder="Email"
-          required
-          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
-        />
-        <input
-          type="password"
-          id="passw"
-          placeholder="Contraseña"
-          required
-          class="w-full p-3 border rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none"
-        />
+      <form id="login-form" class="space-y-6">
+        <div class="relative">
+          <i
+            class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          ></i>
+          <input
+            type="email"
+            id="correo"
+            placeholder="Email"
+            required
+            class="w-full pl-11 pr-4 py-3 bg-slate border border-slate-300 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all"
+          />
+        </div>
+        <div class="relative">
+          <i
+            class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          ></i>
+          <input
+            type="password"
+            id="passw"
+            placeholder="Contraseña"
+            required
+            class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all"
+          />
+        </div>
         <button
           type="submit"
-          class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer"
+          class="w-full bg-indigo-600 text-white py-3 rounded-2xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95 cursor-pointer"
         >
-          Entrar
+          Iniciar Sesión
         </button>
       </form>
-      <p class="text-center text-shadow-lg mt-2 mb-6">
-        ¿No tienes cuenta?
-        <a
-          href="./page/registro.html"
-          class="text-indigo-600 hover:underline font-bold"
-          target="_blank"
-          >Regístrate aquí</a
-        >
-      </p>
+      <div class="mt-8 pt-6 border-t border-slate-300 text-center">
+        <p class="text-neutral-500 text-sm md:text-lg">
+          ¿No tienes cuenta?
+          <a
+            href="./page/registro.html"
+            class="text-indigo-600 hover:text-indigo-700 ml-2 text-sm md:text-lg font-bold transition-colors"
+            target="_blank"
+            >Regístrate aquí</a
+          >
+        </p>
+      </div>
     </div>
     <script type="module" src="./js/autorizacion.js"></script>
     <script type="module" src="./js/forms.js"></script>
