@@ -29,7 +29,7 @@ document.getElementById("login-form")?.addEventListener("submit", (e) => {
   if (user) {
     localStorage.setItem("current_session", JSON.stringify(user));
     window.location.href =
-      user.rol === "administrador" ? "page/admin.html" : "page/perfil.html";
+      user.rol === "administrador" ? "page/admin.html" : "page/home.html";
   } else {
     alert("Credenciales Invalidas");
     document.getElementById("login-form").reset();
@@ -43,10 +43,16 @@ document.getElementById("login-form")?.addEventListener("submit", (e) => {
 document.getElementById("register-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("correo").value;
-  if (db.getUsers().some((u) => u.email === email))
-    return alert("El correo ya extiste");
-  
+  const inputEmail = document.getElementById("correo");
+  const email = inputEmail.value; 
+  if (db.getUsers().some((u) => u.email === email)) {
+    alert("El correo ya extiste");
+
+    inputEmail.value = "";
+    inputEmail.focus();
+    return;
+  }
+    
 
   const newUser = {
     id: Date.now().toString(),
