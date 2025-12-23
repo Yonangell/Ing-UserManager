@@ -1,16 +1,23 @@
 /**
  * @file Módulo de gestión de usuarios y autenticación.
- * Maneja el flujo de login, registro, perfil y administración CRUD.
+ * Centraliza la lógica de Login, Registro, gestión de Perfil y operaciones CRUD de
+ * administración.
+ * @version 1.0.0
+ * @author Ing. Yonangell Guillen
  */
 
 import { db } from "./database.js";
 
-/** @type {Object|null} Sesión del usuario actual almacenada en el navegador. */
+/**
+ * Datos de sesión del usuario recuperados para personalización de la UI.
+ * @constant
+ * @type {Object|null}
+ */
 const session = JSON.parse(localStorage.getItem("current_session"));
 
 /**
- * Procesa el inicio de sesión del usuario.
- * Valida credenciales contra la base de datos y gestiona la redirección por roles.
+ * Maneja el evento de inicio de sesión.
+ * @listens submit - Escucha el formulario con ID 'login-form'.
  */
 document.getElementById("login-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -44,7 +51,7 @@ document.getElementById("register-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const inputEmail = document.getElementById("correo");
-  const email = inputEmail.value; 
+  const email = inputEmail.value;
   if (db.getUsers().some((u) => u.email === email)) {
     alert("El correo ya extiste");
 
@@ -52,7 +59,6 @@ document.getElementById("register-form")?.addEventListener("submit", (e) => {
     inputEmail.focus();
     return;
   }
-    
 
   const newUser = {
     id: Date.now().toString(),
@@ -126,8 +132,11 @@ if (table) {
   };
 
   /**
-   * Elimina un usuario del sistema por su ID.
-   * @param {string} id - Identificador único del usuario.
+   * Elimina un usuario de la base de datos local.
+   * @global
+   * @function del
+   * @param {string} id - ID único del usuario a eliminar.
+   * @returns {void}
    */
   window.del = (id) => {
     if (id === session.id) return alert("No Puedes eliminarte a ti mismo");
@@ -153,8 +162,8 @@ if (table) {
   };
 
   /**
-   * Event listener para el botón de agregar usuario en el panel administrativo.
-   * Crea un nuevo usuario con email proporcionado y contraseña por defecto.
+   * Agregado al CRUD: Crea un usuario con credenciales temporales.
+   * @listens click - Escucha el botón 'admin-add-user'.
    */
   document.getElementById("admin-add-user").onclick = () => {
     const email = prompt("Email del nuevo usuario:");

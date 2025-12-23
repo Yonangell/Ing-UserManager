@@ -3,6 +3,7 @@
  * Se encarga de validar la sesión activa, gestionar permisos por roles y
  * proteger las rutas privadas del aplicativo.
  * @version 1.0.0
+ * @author Ing. Yonangell Guillen
  */
 
 import { db } from "./database.js";
@@ -18,6 +19,7 @@ import { db } from "./database.js";
 
 /**
  * Datos de la sesión actual recuperados de localStorage.
+ * @constant
  * @type {Session|null}
  */
 const session = JSON.parse(localStorage.getItem("current_session"));
@@ -30,7 +32,7 @@ const page = window.location.pathname;
 
 /**
  * LÓGICA DE CONTROL DE ACCESO (GUARD)
- * Ejecución inmediata para evitar parpadeos de contenido protegido.
+ * Ejecución inmediata para evitar el renderizado de contenido restringido.
  */
 
 if (session) {
@@ -42,17 +44,17 @@ if (session) {
   if (
     page.endsWith("index.html") ||
     page.endsWith("registro.html") ||
-    page === "/" || page.endsWith("/")
+    page === "/" ||
+    page.endsWith("/")
   ) {
     window.location.href = "page/home.html";
   }
 
   /**
    * REGLA: Permisos de Administrador.
-   * Bloquea el acceso a admin.html si el rol de la sesión no es 'administrador'.
+   * Redirige a la página de error 403 si el rol no es válido para la ruta actual.
    */
   if (session.rol !== "administrador" && page.endsWith("admin.html")) {
-    //alert("Acceso denegado: Se requiere rol de administrador");
     window.location.href = "403.html";
   }
 } else {
@@ -60,7 +62,11 @@ if (session) {
    * REGLA: Usuarios NO autenticados.
    * Redirección al index si intentan acceder a páginas privadas.
    */
-  if (page.endsWith("perfil.html") || page.endsWith("admin.html") || page.endsWith("home.html")) {
+  if (
+    page.endsWith("perfil.html") ||
+    page.endsWith("admin.html") ||
+    page.endsWith("home.html")
+  ) {
     window.location.href = "/index.html";
   }
 }
@@ -72,19 +78,18 @@ if (session) {
  * @returns {void}
  */
 document.addEventListener("DOMContentLoaded", () => {
-  /**
-   * Muestra elementos exclusivos para administradores.
-   */
+  /** @type {HTMLElement|null} */
   const adminNameElement = document.getElementById("admin-name");
+
   if (adminNameElement && session) {
     adminNameElement.innerText = `ADMIN: ${session.nombre.toUpperCase()}`;
   }
   /**
    * Gestiona el cierre de sesión.
-   * Elimina los datos de 'current_session' y redirige a la página de inicio.
+   * Limpia la persistencia y retorna al índice del proyecto.
    */
   document.getElementById("btn-logout")?.addEventListener("click", () => {
     localStorage.removeItem("current_session");
-    window.location.href = "../index.html"; // Ajustado para salir de la carpeta /page
+    window.location.href = "../index.html";
   });
 });
