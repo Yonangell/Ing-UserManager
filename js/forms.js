@@ -29,7 +29,7 @@ document.getElementById("login-form")?.addEventListener("submit", (e) => {
     try {
       return db.decrypt(u.passw) === pass;
     } catch {
-      return u.passw === pass; // Fallback si no está encriptada
+      return u.passw === pass;
     }
   });
 

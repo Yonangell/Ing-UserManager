@@ -64,14 +64,11 @@
             class="flex flex-col items-center p-4 border border-gray-200 rounded-lg opacity-50 cursor-not-allowed"
           >
             <div class="text-gray-400">📅</div>
-            <span class="font-semibold text-gray-400"
-              >Actividad Reciente</span
-            >
+            <span class="font-semibold text-gray-400">Actividad Reciente</span>
           </div>
         </div>
       </div>
     </main>
-
     <script>
       const session = JSON.parse(localStorage.getItem("current_session"));
       if (!session) {
@@ -88,8 +85,6 @@
         ).innerHTML = `Qué bueno verte hoy, <span class="font-bold text-indigo-600">${session.nombre}</span>. <br> 
         Hoy es 23 de diciembre de 2025 y tu panel está listo.`;
       }
-
-      // Botón Cerrar Sesión
       document.getElementById("btnLogout").addEventListener("click", () => {
         localStorage.removeItem("current_session");
         window.location.href = "../index.html";
