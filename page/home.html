@@ -9,9 +9,9 @@
       src="https://kit.fontawesome.com/e78ed52000.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="icon" type="image/x" href="../assets/image/" />
+    <link rel="icon" type="image/x" href="../assets/image/blogger.png" />
   </head>
-  <body class="bg-gray-100 min-h-screen">
+  <body class="bg-slate-200 min-h-screen">
     <nav class="bg-indigo-700 p-4 text-white shadow-lg">
       <div class="container mx-auto flex justify-between items-center w-full">
         <div class="flex items-center">
@@ -64,7 +64,7 @@
             class="flex flex-col items-center p-4 border border-gray-200 rounded-lg opacity-50 cursor-not-allowed"
           >
             <div class="text-gray-400">📅</div>
-            <span class="font-semibold text-gray-400 font-medium"
+            <span class="font-semibold text-gray-400"
               >Actividad Reciente</span
             >
           </div>
@@ -73,13 +73,10 @@
     </main>
 
     <script>
-      // Lógica de Sesión
       const session = JSON.parse(localStorage.getItem("current_session"));
-
       if (!session) {
         window.location.href = "../index.html";
       } else {
-        // Mostrar nombre y saludo
         document.getElementById("initials").innerText = session.nombre
           .charAt(0)
           .toUpperCase();

@@ -42,9 +42,9 @@ if (session) {
   if (
     page.endsWith("index.html") ||
     page.endsWith("registro.html") ||
-    page === "/"
+    page === "/" || page.endsWith("/")
   ) {
-    window.location.href = "page/perfil.html";
+    window.location.href = "page/home.html";
   }
 
   /**
@@ -52,15 +52,15 @@ if (session) {
    * Bloquea el acceso a admin.html si el rol de la sesión no es 'administrador'.
    */
   if (session.rol !== "administrador" && page.endsWith("admin.html")) {
-    alert("Acceso denegado: Se requiere rol de administrador");
-    window.location.href = "page/perfil.html";
+    //alert("Acceso denegado: Se requiere rol de administrador");
+    window.location.href = "403.html";
   }
 } else {
   /**
    * REGLA: Usuarios NO autenticados.
    * Redirección al index si intentan acceder a páginas privadas.
    */
-  if (page.endsWith("perfil.html") || page.endsWith("admin.html")) {
+  if (page.endsWith("perfil.html") || page.endsWith("admin.html") || page.endsWith("home.html")) {
     window.location.href = "/index.html";
   }
 }
@@ -75,8 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    * Muestra elementos exclusivos para administradores.
    */
-  if (session?.rol === "administrador") {
-    document.getElementById("nav-admin")?.classList.remove("hidden");
+  const adminNameElement = document.getElementById("admin-name");
+  if (adminNameElement && session) {
+    adminNameElement.innerText = `ADMIN: ${session.nombre.toUpperCase()}`;
   }
   /**
    * Gestiona el cierre de sesión.
@@ -84,6 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   document.getElementById("btn-logout")?.addEventListener("click", () => {
     localStorage.removeItem("current_session");
-    window.location.href = "/index.html";
+    window.location.href = "../index.html"; // Ajustado para salir de la carpeta /page
   });
 });
